@@ -70,3 +70,30 @@ fun EntrySiswaScreen(
     }
 }
 
+@Composable
+fun EntrySiswaBody(
+    uiStateSiswa: UIStateSiswa,
+    onSiswaValueChange: (DetailSiswa) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large))
+    ) {
+        FormInputSiswa(
+            siswaDetails = uiStateSiswa.detailSiswa,
+            onValueChange = onSiswaValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            enabled = uiStateSiswa.isEntryValid,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = stringResource(R.string.btn_submit))
+        }
+    }
+}
+
