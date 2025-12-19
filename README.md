@@ -9,3 +9,6 @@ Halaman tambah data dengan isi data
 
 list data sesudah tambah data
 <img width="1080" height="2160" alt="Screenshot_20251219_173207" src="https://github.com/user-attachments/assets/2c239046-1ecf-4f79-8e62-43b87100e798" />
+
+Data pada tabel database
+<img width="1365" height="721" alt="image" src="https://github.com/user-attachments/assets/9e36b211-71fb-40ab-9f68-b6f3ad0e14fe" />
