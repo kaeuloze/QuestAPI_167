@@ -13,6 +13,8 @@ import com.example.myapi.repositori.RepositoryDataSiswa
 import com.example.myapi.uicontroller.route.DestinasiDetail
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import com.example.myapi.R
+import com.example.myapi.modeldata.toUIStateSiswa
 
 class EditViewModel(savedStateHandle: SavedStateHandle,  private val repositoryDataSiswa: RepositoryDataSiswa): ViewModel(){
     var uiStateSiswa by mutableStateOf(UIStateSiswa())
@@ -21,8 +23,8 @@ class EditViewModel(savedStateHandle: SavedStateHandle,  private val repositoryD
     private val idSiswa: Int =  checkNotNull(savedStateHandle[DestinasiDetail.itemIdArg])
     init {
         viewModelScope.launch {
-            uiStateSiswa =
-                UIStateSiswa(detailSiswa = detailSiswa. isEntryValid = validasiInput(detailSiswa))
+            uiStateSiswa = repositoryDataSiswa.getSatuSiswa(idSiswa)
+                .toUIStateSiswa(true)
         }
     }
     fun updateUiState(detailSiswa: DetailSiswa){
@@ -31,7 +33,7 @@ class EditViewModel(savedStateHandle: SavedStateHandle,  private val repositoryD
     }
     private fun validasiInput(uiState: DetailSiswa = uiStateSiswa.detailSiswa ):Boolean{
         return with(uiState){
-            nama.isNotBlank() && alamat.telpon.isNotBlank()
+            nama.isNotBlank() && alamat.isNotBlank() && telpon.isNotBlank()
         }
     }
     suspend fun editSatuSiswa(){
