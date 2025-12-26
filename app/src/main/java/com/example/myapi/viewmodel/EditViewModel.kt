@@ -15,5 +15,11 @@ class EditViewModel(savedStateHandle: SavedStateHandle,  private val repositoryD
     var uiStatusSiswa by mutableStateOf(UIStateSiswa())
     private set
 
-
+    private val idSiswa: Int =  checkNotNull(savedStateHandle[DestinasiDetail.itemIdArg])
+    init {
+        viewModelScope.launch {
+            uiStateSiswa =
+                UIStateSiswa(detailSiswa = detailSiswa. isEntryValid = validasiInput(detailSiswa))
+        }
+    }
 }
