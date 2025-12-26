@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapi.modeldata.DetailSiswa
 import com.example.myapi.modeldata.UIStateSiswa
+import com.example.myapi.modeldata.toDataSiswa
 import com.example.myapi.repositori.RepositoryDataSiswa
 import com.example.myapi.uicontroller.route.DestinasiDetail
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class EditViewModel(savedStateHandle: SavedStateHandle,  private val repositoryDataSiswa: RepositoryDataSiswa): ViewModel(){
-    var uiStatusSiswa by mutableStateOf(UIStateSiswa())
+    var uiStateSiswa by mutableStateOf(UIStateSiswa())
     private set
 
     private val idSiswa: Int =  checkNotNull(savedStateHandle[DestinasiDetail.itemIdArg])
@@ -29,7 +31,21 @@ class EditViewModel(savedStateHandle: SavedStateHandle,  private val repositoryD
     }
     private fun validasiInput(uiState: DetailSiswa = uiStateSiswa.detailSiswa ):Boolean{
         return with(uiState){
-            nama.uisNotBlank() && alamat.telpon.isNotBlank()
+            nama.isNotBlank() && alamat.telpon.isNotBlank()
+        }
+    }
+    suspend fun editSatuSiswa(){
+        if (validasiInput(uiStateSiswa.detailSiswa)) {
+            val call: Response<Void> =
+                repositoryDataSiswa.editSatuSiswa(
+                    idSiswa,uiStateSiswa.detailSiswa.toDataSiswa()
+                )
+
+            if (call.isSuccessful) {
+                println("Sukses Tambah Data : ${call.message()}")
+            } else {
+                println("Gagal tambah data : ${call.errorBody()}")
+            }
         }
     }
 
